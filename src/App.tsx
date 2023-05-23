@@ -1,10 +1,13 @@
+import LoginPage from "./components/auth/login/LoginPage";
+import SignupPage from "./components/auth/signup/SignupPage";
+
 
 
 function App() {
   return (
-    <div className="App">
-			<p>dsadas</p>
-    </div>
+    <>
+		<SignupPage/>
+    </>
   );
 }
 
