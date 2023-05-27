@@ -1,15 +1,27 @@
-import * as React from 'react';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers-pro';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-import { DateRangeCalendar } from '@mui/x-date-pickers-pro/DateRangeCalendar';
+import React, { useState } from 'react';
+import { DateRange } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // основной файл CSS
+import 'react-date-range/dist/theme/default.css'; // файл темы CSS
 
-export default function BasicDateRangeCalendar() {
+const BookingCalendar: React.FC = () => {
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: null,
+      key: 'selection',
+    },
+  ]);
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DateRangeCalendar']}>
-        <DateRangeCalendar />
-      </DemoContainer>
-    </LocalizationProvider>
+    <div>
+     <DateRange
+  editableDateInputs={true}
+  onChange={item => setState([item.selection])}
+  moveRangeOnFirstSelection={false}
+  ranges={state}
+/>
+    </div>
   );
-}
+};
+
+export default BookingCalendar;
