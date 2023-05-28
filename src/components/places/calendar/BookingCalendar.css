@@ -1,0 +1,13 @@
+.react-calendar {
+    width: 300px;
+    background-color: rgba(128, 128, 128, 0.5);
+  }
+  
+  .react-calendar .react-calendar__navigation button {
+    color: #fff;
+  }
+  
+  .react-calendar .react-calendar__tile--active {
+    color: #fff;
+  }
+  

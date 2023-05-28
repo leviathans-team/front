@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import './BookingCalendar.css'; // Импортируем файл стилей
 
 const BookingCalendar: React.FC = () => {
   const [state, setState] = useState([
@@ -13,13 +14,17 @@ const BookingCalendar: React.FC = () => {
   ]);
 
   return (
-    <div>
+                    // @ts-ignore
+
+    <div className="react-calendar">
       <DateRange
         editableDateInputs={true}
-        // @ts-ignore
+                        // @ts-ignore
+
         onChange={(item) => setState([item.selection])}
         moveRangeOnFirstSelection={false}
-				// @ts-ignore
+                        // @ts-ignore
+
         ranges={state}
       />
     </div>

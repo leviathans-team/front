@@ -16,8 +16,13 @@ const TextContainer = styled(Box)(({ theme }) => ({
 }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  width: 500,
+  width: 400,
+  backgroundColor: '#3f51b5',
 }));
+
+const StyledTypography = styled(Typography)({
+  color: '#fff',
+});
 
 interface InformationBlockProps {
   imageUrl: string;
@@ -34,12 +39,12 @@ const InformationBlock: React.FC<InformationBlockProps> = ({ imageUrl, placeName
         <InfoContainer>
           <ImageContainer>
             <CardMedia component="img" image={imageUrl} alt={placeName} />
-            <Typography variant="h5">{placeName}</Typography>
-            <Typography variant="body2" color="textSecondary">{publishDate}</Typography>
+            <StyledTypography variant="h5">{placeName}</StyledTypography>
+            <StyledTypography variant="body2">{publishDate}</StyledTypography>
           </ImageContainer>
           <TextContainer>
             <CardContent>
-              <Typography variant="body1">{description}</Typography>
+              <StyledTypography variant="body1">{description}</StyledTypography>
             </CardContent>
           </TextContainer>
         </InfoContainer>
