@@ -16,13 +16,13 @@ const RootContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   padding: theme.spacing(3),
-  width: '500px', 
-  margin: '0 auto', 
+  width: '500px',
+  margin: '0 auto',
 }));
 
 const FormSection = styled('div')(({ theme }) => ({
   marginBottom: theme.spacing(3),
-	width: '500px',
+  width: '500px',
 }));
 
 const SubmitButton = styled(Button)(({ theme }) => ({
@@ -55,6 +55,14 @@ const SignupPage: React.FC = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+  const [inn, setInn] = useState('');
+  const [legalEntity, setLegalEntity] = useState('');
+  const [position, setPosition] = useState('');
+
+  const [innError, setInnError] = useState('');
+  const [legalEntityError, setLegalEntityError] = useState('');
+  const [positionError, setPositionError] = useState('');
 
   const handleLastNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setLastName(event.target.value);
@@ -105,6 +113,21 @@ const SignupPage: React.FC = () => {
     setMiddleNameError('');
   };
 
+  const handleInnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInn(event.target.value);
+    setInnError('');
+  };
+
+  const handleLegalEntityChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setLegalEntity(event.target.value);
+    setLegalEntityError('');
+  };
+
+  const handlePositionChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPosition(event.target.value);
+    setPositionError('');
+  };
+
   const validateFields = () => {
     let isValid = true;
 
@@ -143,6 +166,21 @@ const SignupPage: React.FC = () => {
       isValid = false;
     }
 
+    if (!inn) {
+      setInnError('Введите ИНН');
+      isValid = false;
+    }
+
+    if (!legalEntity) {
+      setLegalEntityError('Введите юридическое лицо');
+      isValid = false;
+    }
+
+    if (!position) {
+      setPositionError('Введите должность в компании');
+      isValid = false;
+    }
+
     return isValid;
   };
 
@@ -158,7 +196,7 @@ const SignupPage: React.FC = () => {
     <RootContainer component="main">
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
         <Typography component="h1" variant="h5">
-          Регистрация
+          Регистрация арендодателя
         </Typography>
         <StyledLink href="/login" variant="body2">
           Войти
@@ -250,6 +288,48 @@ const SignupPage: React.FC = () => {
         />
       </FormSection>
       <FormSection>
+        <Typography variant="subtitle1">Данные о компании</Typography>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="inn"
+          label="ИНН"
+          name="inn"
+          value={inn}
+          onChange={handleInnChange}
+          error={!!innError}
+          helperText={innError}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="legalEntity"
+          label="Юридическое лицо"
+          name="legalEntity"
+          value={legalEntity}
+          onChange={handleLegalEntityChange}
+          error={!!legalEntityError}
+          helperText={legalEntityError}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="position"
+          label="Должность в компании"
+          name="position"
+          value={position}
+          onChange={handlePositionChange}
+          error={!!positionError}
+          helperText={positionError}
+        />
+      </FormSection>
+			<FormSection>
         <Typography variant="subtitle1">Безопасность</Typography>
         <TextField
           variant="outlined"
@@ -304,8 +384,12 @@ const SignupPage: React.FC = () => {
           !!mobilePhoneError ||
           !!emailError ||
           !!passwordError ||
-          !!confirmPasswordError
-        }>
+          !!confirmPasswordError ||
+          !!innError ||
+          !!legalEntityError ||
+          !!positionError
+        }
+      >
         Зарегистрироваться
       </SubmitButton>
     </RootContainer>
