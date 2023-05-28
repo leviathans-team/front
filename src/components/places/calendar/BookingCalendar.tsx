@@ -16,8 +16,10 @@ const BookingCalendar: React.FC = () => {
     <div>
      <DateRange
   editableDateInputs={true}
+//  @ts-ignore
   onChange={item => setState([item.selection])}
   moveRangeOnFirstSelection={false}
+  //  @ts-ignore
   ranges={state}
 />
     </div>
