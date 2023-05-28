@@ -46,28 +46,60 @@ const LoginPage: React.FC = () => {
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [emailOrPhoneError, setEmailOrPhoneError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+	const [error, setError] = useState('');
+
+  const validateForm = () => {
+    let isValid = true;
+
+    if (!emailOrPhone) {
+      setEmailOrPhoneError('Введите email или номер телефона');
+      isValid = false;
+    }
+
+    if (!password) {
+      setPasswordError('Введите пароль');
+      isValid = false;
+    }
+
+    return isValid;
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.post('http://37.18.110.184:3000/auth/login', {
-        login: emailOrPhone,
-        password: password,
-      });
-
-      if (response.status === 200) {
-        console.log('IsLogin');
-        // Здесь вы можете добавить дополнительную логику для обработки успешного входа в систему
-      } else {
-        // Обработка ошибок входа в систему
-        console.error('Login failed');
-      }
-    } catch (error) {
-      // Обработка ошибок сети или сервера
-      console.error('Network or server error');
-    }
-  };
+		event.preventDefault();
+	
+		if (!validateForm()) {
+			return;
+		}
+	
+		try {
+			const response = await axios.post('http://37.18.110.184:3000/auth/login', {
+				login: emailOrPhone,
+				password: password,
+			});
+	
+			if (response.status === 200) {
+				const responseData = response.data;
+	
+				if (responseData.code === 404) {
+					console.log('User not found');
+					// Здесь вы можете добавить логику для обработки случая, когда пользователь не найден
+				} else {
+					console.log('IsLogin');
+					// Здесь вы можете добавить дополнительную логику для обработки успешного входа в систему
+					// Переадресация на /main
+					window.location.href = '/main';
+				}
+			} else {
+				// Обработка ошибок входа в систему
+				console.error('Login failed');
+			}
+		} catch (error) {
+			// Обработка ошибок сети или сервера
+			console.error('Network or server error');
+		}
+	};
 
   const handleEmailOrPhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmailOrPhone(event.target.value);
@@ -121,14 +153,14 @@ const LoginPage: React.FC = () => {
         <SubmitButton type="submit" fullWidth variant="contained">
           Войти
         </SubmitButton>
-				<Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-					<StyledLink href="/signup" variant="body2">
-	          Зарегистрироваться
-	        </StyledLink>
-					<StyledLink href="/signupbusiness" variant="body2">
-	          Зарегистрироваться как арендодатель
-	        </StyledLink>
-				</Box>
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+          <StyledLink href="/signup" variant="body2">
+            Зарегистрироваться
+          </StyledLink>
+          <StyledLink href="/signupbusiness" variant="body2">
+            Зарегистрироваться как арендодатель
+          </StyledLink>
+        </Box>
       </Form>
     </RootContainer>
   );
