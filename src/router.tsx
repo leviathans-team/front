@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import LoginPage from './components/auth/login/LoginPage';
-import { FC } from 'react';
-import SignupPage from './components/auth/signup/SignupPage';
-import SignupBusinessPage from './components/auth/signup/SignupBusinessPage';
+import LoginPage from './components/Auth/login/LoginPage';
+import SignupPage from './components/Auth/signup/SignupPage';
+import SignupBusinessPage from './components/Auth/signup/SignupBusinessPage';
 
-const AppRouter: FC = () => {
+
+const AppRouter = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
