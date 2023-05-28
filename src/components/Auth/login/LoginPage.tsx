@@ -9,6 +9,7 @@ import {
   Link,
   Box,
 } from '@mui/material';
+import axios from 'axios';
 
 const RootContainer = styled(Box)(({ theme }) => ({
   backgroundColor: '#fff',
@@ -16,8 +17,8 @@ const RootContainer = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   padding: theme.spacing(3),
-  maxWidth: '480px', // Ширина формы
-  margin: '0 auto', // Центрирование формы
+  maxWidth: '480px',
+  margin: '0 auto',
 }));
 
 const Form = styled('form')(({ theme }) => ({
@@ -37,14 +38,36 @@ const SubmitButton = styled(Button)(({ theme }) => ({
 const StyledLink = styled(Link)(({ theme }) => ({
   color: '#2196f3',
   textDecoration: 'none',
-  alignSelf: 'flex-start', // Выравнивание ссылки слева
-  marginTop: theme.spacing(1), // Отступ сверху
+  alignSelf: 'flex-start',
+  marginTop: theme.spacing(1),
 }));
 
 const LoginPage: React.FC = () => {
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post('http://37.18.110.184:3000/auth/login', {
+        login: emailOrPhone,
+        password: password,
+      });
+
+      if (response.status === 200) {
+        console.log('IsLogin');
+        // Здесь вы можете добавить дополнительную логику для обработки успешного входа в систему
+      } else {
+        // Обработка ошибок входа в систему
+        console.error('Login failed');
+      }
+    } catch (error) {
+      // Обработка ошибок сети или сервера
+      console.error('Network or server error');
+    }
+  };
 
   const handleEmailOrPhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmailOrPhone(event.target.value);
@@ -58,20 +81,12 @@ const LoginPage: React.FC = () => {
     setShowPassword(event.target.checked);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Handle form submission logic here
-  };
-
   return (
     <RootContainer component="main">
       <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
         <Typography component="h1" variant="h5">
           Вход
         </Typography>
-        <StyledLink href="#" variant="body2">
-          Зарегистрироваться
-        </StyledLink>
       </Box>
       <Form onSubmit={handleSubmit}>
         <TextField
@@ -106,6 +121,14 @@ const LoginPage: React.FC = () => {
         <SubmitButton type="submit" fullWidth variant="contained">
           Войти
         </SubmitButton>
+				<Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
+					<StyledLink href="/signup" variant="body2">
+	          Зарегистрироваться
+	        </StyledLink>
+					<StyledLink href="/signupbusiness" variant="body2">
+	          Зарегистрироваться как арендодатель
+	        </StyledLink>
+				</Box>
       </Form>
     </RootContainer>
   );

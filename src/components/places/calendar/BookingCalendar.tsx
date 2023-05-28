@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DateRange } from 'react-date-range';
-import 'react-date-range/dist/styles.css'; // основной файл CSS
-import 'react-date-range/dist/theme/default.css'; // файл темы CSS
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 
 const BookingCalendar: React.FC = () => {
   const [state, setState] = useState([
@@ -14,12 +14,14 @@ const BookingCalendar: React.FC = () => {
 
   return (
     <div>
-     <DateRange
-  editableDateInputs={true}
-  onChange={item => setState([item.selection])}
-  moveRangeOnFirstSelection={false}
-  ranges={state}
-/>
+      <DateRange
+        editableDateInputs={true}
+				// @ts-ignore
+        onChange={(item) => setState([item.selection])}
+        moveRangeOnFirstSelection={false}
+				// @ts-ignore
+        ranges={state}
+      />
     </div>
   );
 };

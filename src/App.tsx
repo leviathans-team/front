@@ -1,13 +1,10 @@
-import LoginPage from "./components/auth/login/LoginPage";
-import SignupPage from "./components/auth/signup/SignupPage";
+import AppRouter from "./router";
 
 
 
 function App() {
   return (
-    <>
-		<SignupPage/>
-    </>
+    <AppRouter/>
   );
 }
 
